@@ -1,0 +1,117 @@
+name: Apply GitHub Issue Standard labels
+
+on:
+  issues:
+    types:
+      - opened
+      - edited
+
+permissions:
+  issues: write
+
+jobs:
+  sync-standard-labels:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ensure standard labels exist
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          while IFS='|' read -r name color description; do
+            [ -n "$name" ] || continue
+            gh label create "$name" \
+              --color "$color" \
+              --description "$description" \
+              --force
+          done <<'LABELS'
+          type:feature|1F883D|新機能・機能追加
+          type:bug|D1242F|不具合修正
+          type:task|0969DA|通常作業・改善
+          type:investigation|8250DF|調査・検証
+          priority:critical|B60205|即時対応が必要
+          priority:high|D93F0B|優先的に対応
+          priority:medium|FBCA04|通常優先度
+          priority:low|C5DEF5|低優先度
+          area:ai|5319E7|AI・LLM
+          area:frontend|5319E7|フロントエンド
+          area:backend|5319E7|バックエンド
+          area:infra|5319E7|インフラ
+          area:ci-cd|5319E7|CI/CD
+          area:docs|5319E7|ドキュメント
+          area:database|5319E7|データベース
+          area:mobile|5319E7|モバイル
+          area:web|5319E7|Web・EC・WordPress等
+          kind:refactor|0E8A16|リファクタリング
+          kind:documentation|0E8A16|文書作業
+          kind:performance|0E8A16|性能改善
+          kind:security|0E8A16|セキュリティ
+          kind:testing|0E8A16|テスト
+          kind:maintenance|0E8A16|保守
+          kind:automation|0E8A16|自動化
+          kind:breaking-change|0E8A16|破壊的変更
+          LABELS
+
+      - name: Sync labels selected in the Issue Form
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.issue.number }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          standard_labels=(
+            type:feature
+            type:bug
+            type:task
+            type:investigation
+            priority:critical
+            priority:high
+            priority:medium
+            priority:low
+            area:ai
+            area:frontend
+            area:backend
+            area:infra
+            area:ci-cd
+            area:docs
+            area:database
+            area:mobile
+            area:web
+            kind:refactor
+            kind:documentation
+            kind:performance
+            kind:security
+            kind:testing
+            kind:maintenance
+            kind:automation
+            kind:breaking-change
+          )
+
+          current_labels="$(
+            gh issue view "$NUMBER" \
+              --json labels \
+              --jq '.labels[].name'
+          )"
+
+          for label in "${standard_labels[@]}"; do
+            if grep -Fxq "$label" <<<"$current_labels"; then
+              gh issue edit "$NUMBER" --remove-label "$label"
+            fi
+          done
+
+          selected_labels=()
+          for label in "${standard_labels[@]}"; do
+            if grep -Fq "$label" <<<"$ISSUE_BODY"; then
+              selected_labels+=("$label")
+            fi
+          done
+
+          if [ "${#selected_labels[@]}" -gt 0 ]; then
+            labels_csv="$(IFS=,; printf '%s' "${selected_labels[*]}")"
+            gh issue edit "$NUMBER" --add-label "$labels_csv"
+          fi

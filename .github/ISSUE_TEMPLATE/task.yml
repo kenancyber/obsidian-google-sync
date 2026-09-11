@@ -1,0 +1,132 @@
+name: TASK
+description: 通常作業・改善・リファクタリング等を登録する
+title: "[TASK] "
+labels:
+  - "type:task"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        実装可能な作業単位として記載してください。モデル／エフォートは入力不要です。
+  - type: dropdown
+    id: issue-type
+    attributes:
+      label: Type
+      options:
+        - "type:task"
+      default: 0
+    validations:
+      required: true
+  - type: input
+    id: summary
+    attributes:
+      label: 概要
+      description: 何をする作業かを一文で記載してください。
+    validations:
+      required: true
+  - type: textarea
+    id: background
+    attributes:
+      label: 背景・目的
+      description: なぜこの作業が必要かを記載してください。
+    validations:
+      required: true
+  - type: textarea
+    id: action
+    attributes:
+      label: 対応内容
+      description: 対応方針の概要を記載してください。
+    validations:
+      required: true
+  - type: textarea
+    id: work-items
+    attributes:
+      label: 作業内容
+      description: 実施する具体的な作業を記載してください。
+      placeholder: |
+        - [ ] 作業1
+        - [ ] 作業2
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: 影響範囲
+      description: 影響する機能、ファイル、利用者、運用などを記載してください。
+    validations:
+      required: true
+  - type: textarea
+    id: completion
+    attributes:
+      label: 完了条件
+      description: Doneと判断できる観測可能な条件を記載してください。
+      placeholder: |
+        - [ ] 条件1
+        - [ ] 条件2
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: 必須。対応優先度を選択してください。
+      options:
+        - "priority:critical"
+        - "priority:high"
+        - "priority:medium"
+        - "priority:low"
+    validations:
+      required: true
+  - type: dropdown
+    id: executor
+    attributes:
+      label: 実装担当
+      description: 必須。現時点の実装担当を選択してください。
+      options:
+        - "Human"
+        - "Codex"
+        - "Claude Code"
+        - "Gemini CLI"
+        - "Undecided"
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: 関係する領域を必要なだけ選択してください。
+      multiple: true
+      options:
+        - "area:ai"
+        - "area:frontend"
+        - "area:backend"
+        - "area:infra"
+        - "area:ci-cd"
+        - "area:docs"
+        - "area:database"
+        - "area:mobile"
+        - "area:web"
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind
+      description: 作業・問題の性質を必要なだけ選択してください。
+      multiple: true
+      options:
+        - "kind:refactor"
+        - "kind:documentation"
+        - "kind:performance"
+        - "kind:security"
+        - "kind:testing"
+        - "kind:maintenance"
+        - "kind:automation"
+        - "kind:breaking-change"
+  - type: textarea
+    id: related
+    attributes:
+      label: 関連資料
+      description: 関連Issue、仕様書、実装計画、PRなどがあれば記載してください。
+      placeholder: |
+        - #123
+        - docs/specs/<topic>/README.md
+        - docs/plans/<topic>/README.md
