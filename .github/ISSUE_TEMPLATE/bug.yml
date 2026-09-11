@@ -1,0 +1,147 @@
+name: BUG
+description: 不具合・異常動作を登録する
+title: "[BUG] "
+labels:
+  - "type:bug"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        事実と再現条件を中心に記載してください。秘密情報・本番データは貼り付けないでください。
+  - type: dropdown
+    id: issue-type
+    attributes:
+      label: Type
+      options:
+        - "type:bug"
+      default: 0
+    validations:
+      required: true
+  - type: input
+    id: summary
+    attributes:
+      label: 概要
+      description: 何が壊れているかを一文で記載してください。
+    validations:
+      required: true
+  - type: textarea
+    id: background
+    attributes:
+      label: 背景・目的
+      description: なぜ修正が必要か、正常化すべき状態を記載してください。
+    validations:
+      required: true
+  - type: textarea
+    id: action
+    attributes:
+      label: 対応内容
+      description: 現時点で想定する修正方針があれば記載してください。不明なら「未定」で構いません。
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 再現手順
+      description: 最小限の再現手順を番号付きで記載してください。
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期待する結果
+      description: 本来どうなるべきかを記載してください。
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: 実際の結果
+      description: 実際に起きている現象・エラーを記載してください。
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: 発生環境
+      description: OS、バージョン、ブラウザ、端末、再現率など。分からない場合は「不明」と記載してください。
+    validations:
+      required: true
+  - type: textarea
+    id: completion
+    attributes:
+      label: 完了条件
+      description: 修正済みと判断できる条件と必要な回帰確認を記載してください。
+      placeholder: |
+        - [ ] 再現しない
+        - [ ] 回帰テストが通る
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: 必須。対応優先度を選択してください。
+      options:
+        - "priority:critical"
+        - "priority:high"
+        - "priority:medium"
+        - "priority:low"
+    validations:
+      required: true
+  - type: dropdown
+    id: executor
+    attributes:
+      label: 実装担当
+      description: 必須。現時点の実装担当を選択してください。
+      options:
+        - "Human"
+        - "Codex"
+        - "Claude Code"
+        - "Gemini CLI"
+        - "Undecided"
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: 関係する領域を必要なだけ選択してください。
+      multiple: true
+      options:
+        - "area:ai"
+        - "area:frontend"
+        - "area:backend"
+        - "area:infra"
+        - "area:ci-cd"
+        - "area:docs"
+        - "area:database"
+        - "area:mobile"
+        - "area:web"
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind
+      description: 作業・問題の性質を必要なだけ選択してください。
+      multiple: true
+      options:
+        - "kind:refactor"
+        - "kind:documentation"
+        - "kind:performance"
+        - "kind:security"
+        - "kind:testing"
+        - "kind:maintenance"
+        - "kind:automation"
+        - "kind:breaking-change"
+  - type: textarea
+    id: related
+    attributes:
+      label: 関連資料
+      description: 関連Issue、仕様書、実装計画、PRなどがあれば記載してください。
+      placeholder: |
+        - #123
+        - docs/specs/<topic>/README.md
+        - docs/plans/<topic>/README.md

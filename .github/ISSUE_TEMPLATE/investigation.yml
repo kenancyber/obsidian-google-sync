@@ -1,0 +1,142 @@
+name: INVESTIGATION
+description: 技術調査・原因調査・検証を登録する
+title: "[INVESTIGATION] "
+labels:
+  - "type:investigation"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        調査開始時は「調査結果」「結論」を未記入で作成し、調査後にIssue本文へ追記してください。
+  - type: dropdown
+    id: issue-type
+    attributes:
+      label: Type
+      options:
+        - "type:investigation"
+      default: 0
+    validations:
+      required: true
+  - type: input
+    id: summary
+    attributes:
+      label: 概要
+      description: 何を調べるIssueかを一文で記載してください。
+    validations:
+      required: true
+  - type: textarea
+    id: background
+    attributes:
+      label: 背景・目的
+      description: なぜ調査が必要になったのかを記載してください。
+    validations:
+      required: true
+  - type: textarea
+    id: action
+    attributes:
+      label: 対応内容
+      description: 想定する調査方法・検証アプローチを記載してください。
+    validations:
+      required: true
+  - type: textarea
+    id: investigation-purpose
+    attributes:
+      label: 調査目的
+      description: この調査で明らかにしたい判断事項を記載してください。
+    validations:
+      required: true
+  - type: textarea
+    id: questions
+    attributes:
+      label: 確認事項
+      description: 調査で確認すべき論点・仮説を記載してください。
+      placeholder: |
+        - 確認事項1
+        - 確認事項2
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: 調査結果
+      description: 調査後に事実・根拠・検証結果を追記してください。作成時は空欄で構いません。
+  - type: textarea
+    id: conclusion
+    attributes:
+      label: 結論
+      description: 調査後に推奨方針・次アクションを追記してください。作成時は空欄で構いません。
+  - type: textarea
+    id: completion
+    attributes:
+      label: 完了条件
+      description: 調査を終了できる条件を記載してください。
+      placeholder: |
+        - [ ] 必要な根拠が揃っている
+        - [ ] 結論と次アクションが記録されている
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: 必須。対応優先度を選択してください。
+      options:
+        - "priority:critical"
+        - "priority:high"
+        - "priority:medium"
+        - "priority:low"
+    validations:
+      required: true
+  - type: dropdown
+    id: executor
+    attributes:
+      label: 実装担当
+      description: 必須。現時点の実装担当を選択してください。
+      options:
+        - "Human"
+        - "Codex"
+        - "Claude Code"
+        - "Gemini CLI"
+        - "Undecided"
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: 関係する領域を必要なだけ選択してください。
+      multiple: true
+      options:
+        - "area:ai"
+        - "area:frontend"
+        - "area:backend"
+        - "area:infra"
+        - "area:ci-cd"
+        - "area:docs"
+        - "area:database"
+        - "area:mobile"
+        - "area:web"
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind
+      description: 作業・問題の性質を必要なだけ選択してください。
+      multiple: true
+      options:
+        - "kind:refactor"
+        - "kind:documentation"
+        - "kind:performance"
+        - "kind:security"
+        - "kind:testing"
+        - "kind:maintenance"
+        - "kind:automation"
+        - "kind:breaking-change"
+  - type: textarea
+    id: related
+    attributes:
+      label: 関連資料
+      description: 関連Issue、仕様書、実装計画、PRなどがあれば記載してください。
+      placeholder: |
+        - #123
+        - docs/specs/<topic>/README.md
+        - docs/plans/<topic>/README.md
