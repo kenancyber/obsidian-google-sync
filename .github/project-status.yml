@@ -1,0 +1,20 @@
+project:
+  name: "obsidian-google-sync"
+  status: completed
+  phase: released-plugin
+  blocked_by: null
+
+progress:
+  summary: "Google Calendar / Tasks同期プラグインはリリース・ドキュメント・自動テストまで整備済みで、現在Open Issueもないため完成後の保守フェーズとして扱う。"
+  completed:
+    - "ObsidianとGoogle Calendar / Tasksの同期機能"
+    - "iOS OAuth・subtask・Calendar拡張フィールド対応"
+    - "pull-only安全策と同期echo抑止"
+    - "unit test 122件とE2E検証"
+    - "Community Plugin / 手動install向けドキュメント整備"
+  current: []
+  remaining: []
+
+updated:
+  at: "2026-09-20T20:50:00+09:00"
+  by: "chatgpt"
